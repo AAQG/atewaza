@@ -37,7 +37,7 @@ jobs:
 
       # 5. Build de producción (base href actualizado)
       - name: Build application 🔨
-        run: ng build --configuration production --base-href "/atewaza/"
+        run: ng build --configuration production --base-href "/"
 
       # 6. Configura GitHub Pages
       - name: Setup Pages
