@@ -37,7 +37,7 @@ jobs:
 
       # 3. Instala las dependencias de tu proyecto
       - name: Install dependencies 📦
-        run: npm ci # 'ci' es más rápido y seguro para entornos de automatización
+        run: npm install --legacy-peer-deps # 'ci' es más rápido y seguro para entornos de automatización
 
       # 4. Construye la aplicación para producción (¡Paso clave!)
       - name: Build application 🔨
