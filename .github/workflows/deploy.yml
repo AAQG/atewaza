@@ -39,23 +39,27 @@ jobs:
       - name: Install dependencies 📦
         run: npm install --legacy-peer-deps # 'ci' es más rápido y seguro para entornos de automatización
 
-      # 4. Construye la aplicación para producción (¡Paso clave!)
+      # 4. Instala Angular CLI
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+
+      # 5. Construye la aplicación para producción (¡Paso clave!)
       - name: Build application 🔨
         run: ng build --configuration production --base-href "https://AAQG.github.io/ATEWAZA/"
         # ⚠️ ¡IMPORTANTE! Reemplaza <tu-usuario> y <nombre-del-repositorio>
 
-      # 5. Prepara los artefactos para el despliegue
+      # 6. Prepara los artefactos para el despliegue
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      # 6. Sube los artefactos del build para que GitHub Pages los use
+      # 7. Sube los artefactos del build para que GitHub Pages los use
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Sube el contenido de la carpeta de build de Angular
           path: './dist/atewaza-angular/browser/' # Ajusta esta ruta al output de tu build
 
-      # 7. Despliega los artefactos en GitHub Pages
+      # 8. Despliega los artefactos en GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
