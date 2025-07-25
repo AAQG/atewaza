@@ -57,3 +57,13 @@
   animation-delay: 1s;
   opacity: 0;
 }
+
+.nav-link-active,
+.nav-link-deactive {
+  @apply inline-block; /* para asegurar separación */
+}
+
+.combo-nav-link-active,
+.combo-nav-link-deactive {
+  @apply inline-block; /* para asegurar separación */
+}
