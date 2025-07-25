@@ -1,0 +1,61 @@
+# Nombre del workflow que aparecerá en la pestaña "Actions" de GitHub
+name: Build and Deploy Angular App
+
+# Define cuándo se debe ejecutar este workflow
+on:
+  # Se ejecuta cada vez que haces un push a la rama 'main'
+  push:
+    branches:
+      - main
+  # Permite ejecutar este workflow manualmente desde la pestaña Actions
+  workflow_dispatch:
+
+# Permisos necesarios para que la Action pueda escribir en la rama de despliegue
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Define los trabajos (jobs) que se van a ejecutar
+jobs:
+  build-and-deploy:
+    # El tipo de máquina virtual donde se ejecutará el job
+    runs-on: ubuntu-latest
+
+    # Los pasos que componen el job
+    steps:
+      # 1. Clona tu repositorio en la máquina virtual
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      # 2. Configura Node.js para poder usar npm y ng
+      - name: Setup Node.js ⚙️
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Usa una versión de Node compatible con tu proyecto
+          cache: 'npm'
+
+      # 3. Instala las dependencias de tu proyecto
+      - name: Install dependencies 📦
+        run: npm ci # 'ci' es más rápido y seguro para entornos de automatización
+
+      # 4. Construye la aplicación para producción (¡Paso clave!)
+      - name: Build application 🔨
+        run: ng build --configuration production --base-href "https://AAQG.github.io/ATEWAZA/"
+        # ⚠️ ¡IMPORTANTE! Reemplaza <tu-usuario> y <nombre-del-repositorio>
+
+      # 5. Prepara los artefactos para el despliegue
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      # 6. Sube los artefactos del build para que GitHub Pages los use
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Sube el contenido de la carpeta de build de Angular
+          path: './dist/atewaza-angular/browser/' # Ajusta esta ruta al output de tu build
+
+      # 7. Despliega los artefactos en GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
