@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/atewaza-angular",
+            "outputPath": "dist/atewaza-angular/browser",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
